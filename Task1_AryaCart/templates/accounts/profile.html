@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block title %}Profile{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="page-header"><h1>My Profile</h1></div>
+    <div class="profile-layout">
+        <div class="profile-sidebar">
+            <div class="profile-avatar-card">
+                <div class="profile-avatar">{{ user.first_name.0|default:user.username.0|upper }}</div>
+                <h3>{{ user.first_name }} {{ user.last_name }}</h3>
+                <p style="color:var(--text-muted);">@{{ user.username }}</p>
+                <a href="{% url 'accounts:profile_edit' %}" class="btn-outline btn-sm" style="margin-top:1rem;"><i class="fas fa-edit"></i> Edit Profile</a>
+            </div>
+            <div class="profile-info-card">
+                <div class="info-row"><i class="fas fa-envelope"></i><span>{{ user.email|default:"Not set" }}</span></div>
+                {% if user.profile.phone %}<div class="info-row"><i class="fas fa-phone"></i><span>{{ user.profile.phone }}</span></div>{% endif %}
+                {% if user.profile.city %}<div class="info-row"><i class="fas fa-map-marker-alt"></i><span>{{ user.profile.city }}</span></div>{% endif %}
+                {% if user.profile.bio %}<div class="info-row"><i class="fas fa-info-circle"></i><span>{{ user.profile.bio }}</span></div>{% endif %}
+            </div>
+        </div>
+        <div class="profile-main">
+            <!-- Orders Tab -->
+            <div class="profile-section">
+                <h3 style="margin-bottom:1rem;"><i class="fas fa-box" style="color:var(--gold);"></i> Recent Orders</h3>
+                {% for order in orders|slice:":5" %}
+                <a href="{% url 'orders:order_detail' order.order_number %}" class="order-card" style="text-decoration:none;color:inherit;">
+                    <div class="order-header">
+                        <div><span class="order-num">{{ order.order_number }}</span><div style="font-size:0.8rem;color:var(--text-muted);">{{ order.created_at|date:"M d, Y" }}</div></div>
+                        <div><span class="status-badge status-{{ order.status }}">{{ order.get_status_display }}</span><div style="color:var(--gold);font-weight:600;margin-top:4px;">₹{{ order.total_amount|intcomma }}</div></div>
+                    </div>
+                </a>
+                {% empty %}
+                <p style="color:var(--text-muted);text-align:center;padding:2rem;">No orders yet.</p>
+                {% endfor %}
+                {% if orders.count > 5 %}<a href="{% url 'orders:order_history' %}" style="display:block;text-align:center;margin-top:1rem;">View all orders →</a>{% endif %}
+            </div>
+            <!-- Watch History Tab -->
+            <div class="profile-section" style="margin-top:2rem;">
+                <h3 style="margin-bottom:1rem;"><i class="fas fa-clock-rotate-left" style="color:var(--gold);"></i> Recently Viewed</h3>
+                {% if history %}
+                <div class="profile-history-grid">
+                    {% for item in history|slice:":6" %}
+                    <a href="{{ item.product.get_absolute_url }}" class="history-item">
+                        <div class="history-img">{% if item.product.image %}<img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">{% else %}<div class="image-placeholder" style="height:100%;"><span class="initials" style="font-size:1rem;">{{ item.product.name.0 }}{{ item.product.name.1 }}</span></div>{% endif %}</div>
+                        <div class="history-info"><span class="history-name">{{ item.product.name }}</span><span class="history-price">₹{{ item.product.price|intcomma }}</span></div>
+                    </a>
+                    {% endfor %}
+                </div>
+                {% if history.count > 6 %}<a href="{% url 'store:watch_history' %}" style="display:block;text-align:center;margin-top:1rem;">View all →</a>{% endif %}
+                {% else %}
+                <p style="color:var(--text-muted);text-align:center;padding:2rem;">No recently viewed products.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

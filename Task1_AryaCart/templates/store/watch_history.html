@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}Watch History{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="page-header"><h1>Watch History</h1><p>Products you've recently viewed</p></div>
+    {% if history %}
+    <div class="product-grid">
+        {% for item in history %}
+        <div class="product-card">
+            <a href="{{ item.product.get_absolute_url }}" class="card-image">
+                {% if item.product.image %}<img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
+                {% else %}<div class="image-placeholder"><span class="initials">{{ item.product.name.0 }}{{ item.product.name.1 }}</span></div>{% endif %}
+            </a>
+            <div class="card-body">
+                <div class="card-category">{{ item.product.category.name }}</div>
+                <h3 class="card-title"><a href="{{ item.product.get_absolute_url }}">{{ item.product.name }}</a></h3>
+                <div class="card-price"><span class="price-current">₹{{ item.product.price }}</span></div>
+                <div style="font-size:0.8rem;color:var(--text-muted);margin-top:4px;">Viewed: {{ item.viewed_at|timesince }} ago</div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state"><div class="empty-icon">👁️</div><h3>No Watch History</h3><p>Start browsing products to build your history.</p><a href="{% url 'store:product_list' %}" class="btn-gold">Browse Products</a></div>
+    {% endif %}
+</div>
+{% endblock %}

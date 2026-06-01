@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block title %}Order {{ order.order_number }}{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="page-header"><h1>Order Details</h1><p>{{ order.order_number }}</p></div>
+    <div class="checkout-grid">
+        <div>
+            <div class="detail-card">
+                <h3 style="margin-bottom:1rem;">Items</h3>
+                {% for item in order_items %}
+                <div class="summary-row" style="padding:1rem 0;">
+                    <div><strong>{{ item.product_name }}</strong><div style="font-size:0.85rem;color:var(--text-muted);">Qty: {{ item.quantity }} × ₹{{ item.price|intcomma }}</div></div>
+                    <span style="font-weight:600;color:var(--gold);">₹{{ item.subtotal|intcomma }}</span>
+                </div>
+                {% endfor %}
+                <div class="summary-total"><span>Total</span><span>₹{{ order.total_amount|intcomma }}</span></div>
+            </div>
+        </div>
+        <div>
+            <div class="detail-card" style="margin-bottom:1rem;">
+                <h3 style="margin-bottom:1rem;">Status</h3>
+                <span class="status-badge status-{{ order.status }}" style="font-size:0.9rem;">{{ order.get_status_display }}</span>
+                <div style="margin-top:1rem;font-size:0.85rem;color:var(--text-muted);">Placed: {{ order.created_at|date:"M d, Y · h:i A" }}</div>
+                <div style="font-size:0.85rem;color:var(--text-muted);">Payment: {{ order.payment_method|upper }}</div>
+            </div>
+            <div class="detail-card">
+                <h3 style="margin-bottom:1rem;">Shipping Address</h3>
+                <p style="font-size:0.9rem;color:var(--text-secondary);line-height:1.8;">{{ order.full_name }}<br>{{ order.address }}<br>{{ order.city }}, {{ order.state }} {{ order.zipcode }}<br>{{ order.phone }}<br>{{ order.email }}</p>
+            </div>
+        </div>
+    </div>
+    <a href="{% url 'orders:order_history' %}" class="btn-outline" style="margin-top:1.5rem;"><i class="fas fa-arrow-left"></i> Back to Orders</a>
+</div>
+{% endblock %}

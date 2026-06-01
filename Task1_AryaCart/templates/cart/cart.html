@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block title %}Cart{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="page-header"><h1>Shopping Cart</h1></div>
+    {% if items %}
+    <div class="cart-layout">
+        <div class="cart-items">
+            {% for item in items %}
+            <div class="cart-item">
+                <div class="cart-item-image">
+                    {% if item.product.image %}<img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
+                    {% else %}<div class="image-placeholder" style="height:100%;"><span class="initials">{{ item.product.name.0 }}{{ item.product.name.1 }}</span></div>{% endif %}
+                </div>
+                <div class="cart-item-info">
+                    <h3><a href="{{ item.product.get_absolute_url }}">{{ item.product.name }}</a></h3>
+                    <div class="card-category">{{ item.product.category.name }}</div>
+                    {% if item.variant_details %}
+                    <div style="font-size:0.85rem; color:#666; margin-bottom:5px;">{{ item.variant_details }}</div>
+                    {% endif %}
+                    <div class="cart-item-price">₹{{ item.product.price|intcomma }}</div>
+                </div>
+                <form method="POST" action="{% url 'cart:update_cart' item.id %}" class="cart-quantity">
+                    {% csrf_token %}
+                    <input type="number" name="quantity" value="{{ item.quantity }}" min="1" max="99" class="form-input">
+                    <button type="submit" class="btn-gold btn-sm btn-ripple">Update</button>
+                </form>
+                <div class="cart-item-subtotal">
+                    <div class="subtotal-amount">₹{{ item.subtotal|intcomma }}</div>
+                    <a href="{% url 'cart:remove_from_cart' item.id %}" class="btn-danger btn-sm"><i class="fas fa-trash"></i></a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="cart-summary">
+            <h3>Order Summary</h3>
+            <div class="summary-row"><span>Items ({{ cart.total_items }})</span><span>₹{{ cart.subtotal|intcomma }}</span></div>
+            {% if cart.coupon %}
+            <div class="summary-row" style="color:var(--primary);">
+                <span>Discount ({{ cart.coupon.code }})</span>
+                <span>-₹{{ cart.discount_amount|intcomma }}</span>
+            </div>
+            {% endif %}
+            <div class="summary-row"><span>Shipping</span><span style="color:var(--success);">Free</span></div>
+            <div class="summary-total"><span>Total</span><span>₹{{ cart.total_price|intcomma }}</span></div>
+            
+            <div class="coupon-section" style="margin:1.5rem 0; padding:1rem; background:#f9f9f9; border-radius:5px; border:1px dashed #ddd;">
+                <form action="{% url 'cart:apply_coupon' %}" method="POST" style="display:flex; gap:10px;">
+                    {% csrf_token %}
+                    <input type="text" name="coupon_code" placeholder="Enter Promo Code" class="form-input" style="flex:1;" required>
+                    <button type="submit" class="btn-outline btn-sm">Apply</button>
+                </form>
+            </div>
+            
+            <a href="{% url 'orders:checkout' %}" class="btn-gold btn-lg btn-block" style="margin-top:0.5rem;"><i class="fas fa-lock"></i> Proceed to Checkout</a>
+            <a href="{% url 'store:product_list' %}" style="display:block;text-align:center;margin-top:1rem;color:var(--text-muted);font-size:0.9rem;">← Continue Shopping</a>
+        </div>
+    </div>
+    {% else %}
+    <div class="empty-state"><div class="empty-icon">🛒</div><h3>Your Cart is Empty</h3><p>Add some products to get started!</p><a href="{% url 'store:product_list' %}" class="btn-gold btn-lg">Start Shopping</a></div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,167 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block title %}{{ product.name }}{% endblock %}
+{% block content %}
+<div class="container">
+    <ul class="breadcrumb">
+        <li><a href="{% url 'store:home' %}">Home</a></li><li class="separator">›</li>
+        <li><a href="{% url 'store:category_products' slug=product.category.slug %}">{{ product.category.name }}</a></li><li class="separator">›</li>
+        <li class="current">{{ product.name }}</li>
+    </ul>
+    <div class="product-detail-grid">
+        <div class="detail-images">
+            <div class="main-image-wrap" onclick="openLightbox(this.querySelector('img').src)">
+                {% if product.image %}<img src="{{ product.image.url }}" alt="{{ product.name }}" class="main-product-image">
+                {% else %}<div class="image-placeholder" style="height:500px;"><span class="initials" style="font-size:4rem;">{{ product.name.0 }}{{ product.name.1 }}</span></div>{% endif %}
+            </div>
+            {% if gallery %}
+            <div class="thumbnail-row">
+                {% if product.image %}
+                <div class="thumbnail thumbnail-active" onclick="this.parentElement.querySelectorAll('.thumbnail').forEach(t=>t.classList.remove('thumbnail-active'));this.classList.add('thumbnail-active');">
+                    <img src="{{ product.image.url }}" alt="Main" class="thumbnail-img" data-src="{{ product.image.url }}">
+                </div>
+                {% endif %}
+                {% for img in gallery %}
+                <div class="thumbnail" onclick="this.parentElement.querySelectorAll('.thumbnail').forEach(t=>t.classList.remove('thumbnail-active'));this.classList.add('thumbnail-active');">
+                    <img src="{{ img.image.url }}" alt="Gallery" class="thumbnail-img" data-src="{{ img.image.url }}">
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+        <div class="detail-info">
+            <div class="card-category" style="font-size:0.9rem;">{{ product.category.name }}</div>
+            <h1>{{ product.name }}</h1>
+            <div class="detail-price">
+                {% if product.discount_price %}
+                <span class="price-sale" style="font-size:2rem;">₹{{ product.discount_price|intcomma }}</span>
+                <span class="price-original" style="font-size:1.2rem;">₹{{ product.price|intcomma }}</span>
+                <span class="discount-badge" style="position:static;display:inline-block;">-{{ product.discount_percentage }}% OFF</span>
+                {% else %}
+                <span class="price-current" style="font-size:2rem;">₹{{ product.price|intcomma }}</span>
+                {% endif %}
+                
+                {% if user.is_authenticated %}
+                <a href="{% url 'store:toggle_wishlist' product.id %}" class="wishlist-btn" title="Toggle Wishlist" style="margin-left:15px; font-size:1.5rem; color:{% if in_wishlist %}var(--primary){% else %}#ccc{% endif %}; vertical-align:middle;">
+                    <i class="fa{% if in_wishlist %}s{% else %}r{% endif %} fa-heart"></i>
+                </a>
+                {% endif %}
+            </div>
+            <p class="detail-desc">{{ product.description }}</p>
+            <div class="detail-meta">
+                <div><span class="meta-label">Availability:</span>
+                    {% if product.is_available and product.stock > 0 %}
+                    <span style="color:var(--success);font-weight:600;">In Stock ({{ product.stock }})</span>
+                    {% else %}<span style="color:var(--danger);font-weight:600;">Out of Stock</span>{% endif %}
+                </div>
+                <div><span class="meta-label">Category:</span> {{ product.category.name }}</div>
+            </div>
+            {% if product.is_available and product.stock > 0 %}
+            <form action="{% url 'cart:add_to_cart' product.id %}" method="POST" style="margin-top:1.5rem;">
+                {% csrf_token %}
+                {% if variants %}
+                <div class="variants-selector" style="margin-bottom:1.5rem; display:flex; gap:20px;">
+                    <div class="variant-group">
+                        <label style="font-weight:600;display:block;margin-bottom:5px;">Size:</label>
+                        <select name="size" class="form-input" style="padding:8px; border-radius:5px;" required>
+                            <option value="">Select Size</option>
+                            {% for v in variants %}
+                                {% ifchanged v.size %}<option value="{{ v.size }}">{{ v.size }}</option>{% endifchanged %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="variant-group">
+                        <label style="font-weight:600;display:block;margin-bottom:5px;">Color:</label>
+                        <select name="color" class="form-input" style="padding:8px; border-radius:5px;" required>
+                            <option value="">Select Color</option>
+                            {% for v in variants %}
+                                {% ifchanged v.color %}<option value="{{ v.color }}">{{ v.color }}</option>{% endifchanged %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                {% endif %}
+                <div class="detail-actions">
+                    <button type="submit" class="btn-gold btn-lg add-to-cart-btn"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+                </div>
+            </form>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Reviews Section -->
+    <section class="section" style="padding-top:3rem; border-top:1px solid #eee; margin-top:3rem;">
+        <div class="section-header"><h2>Customer <span class="gold">Reviews</span></h2></div>
+        
+        <div class="reviews-container" style="max-width:800px; margin:0 auto;">
+            {% if user.is_authenticated %}
+            <div class="review-form-card" style="background:#fcfcfc; padding:2rem; border-radius:10px; margin-bottom:2rem; border:1px solid #eee;">
+                <h4 style="margin-bottom:1rem;">Write a Review</h4>
+                <form action="{% url 'store:add_review' product.id %}" method="POST">
+                    {% csrf_token %}
+                    <div style="margin-bottom:1rem;">
+                        <label>Rating (1-5):</label>
+                        <select name="rating" class="form-input" style="width:100px; display:inline-block; margin-left:10px;">
+                            <option value="5">5 ⭐⭐⭐⭐⭐</option>
+                            <option value="4">4 ⭐⭐⭐⭐</option>
+                            <option value="3">3 ⭐⭐⭐</option>
+                            <option value="2">2 ⭐⭐</option>
+                            <option value="1">1 ⭐</option>
+                        </select>
+                    </div>
+                    <textarea name="comment" class="form-input" rows="3" placeholder="Share your experience with this product..." required></textarea>
+                    <button type="submit" class="btn-gold btn-sm" style="margin-top:10px;">Submit Review</button>
+                </form>
+            </div>
+            {% else %}
+            <div class="alert" style="background:#fff3cd; color:#856404; padding:15px; border-radius:5px; margin-bottom:2rem;">
+                Please <a href="{% url 'accounts:login' %}" style="font-weight:bold;text-decoration:underline;">login</a> to leave a review.
+            </div>
+            {% endif %}
+
+            <div class="reviews-list">
+                {% for review in reviews %}
+                <div class="review-item" style="border-bottom:1px solid #eee; padding:1.5rem 0;">
+                    <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+                        <strong>{{ review.user.username }}</strong>
+                        <span style="color:#666; font-size:0.9rem;">{{ review.created_at|date:"M d, Y" }}</span>
+                    </div>
+                    <div style="color:var(--primary); margin-bottom:10px;">
+                        {% for i in "12345"|make_list %}
+                            {% if forloop.counter <= review.rating %}<i class="fas fa-star"></i>{% else %}<i class="far fa-star"></i>{% endif %}
+                        {% endfor %}
+                    </div>
+                    <p>{{ review.comment }}</p>
+                </div>
+                {% empty %}
+                <p style="text-align:center; color:#666; font-style:italic;">No reviews yet. Be the first to review this product!</p>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    {% if related_products %}
+    <section class="section" style="padding-top:2rem;">
+        <div class="section-header"><h2>Related <span class="gold">Products</span></h2></div>
+        <div class="product-grid">
+            {% for p in related_products %}
+            <div class="product-card">
+                <a href="{{ p.get_absolute_url }}" class="card-image">
+                    {% if p.image %}<img src="{{ p.image.url }}" alt="{{ p.name }}">
+                    {% else %}<div class="image-placeholder"><span class="initials">{{ p.name.0 }}{{ p.name.1 }}</span></div>{% endif %}
+                </a>
+                <div class="card-body">
+                    <div class="card-category">{{ p.category.name }}</div>
+                    <h3 class="card-title"><a href="{{ p.get_absolute_url }}">{{ p.name }}</a></h3>
+                    <div class="card-price">
+                        {% if p.discount_price %}<span class="price-sale">₹{{ p.discount_price|intcomma }}</span><span class="price-original">₹{{ p.price|intcomma }}</span>
+                        {% else %}<span class="price-current">₹{{ p.price|intcomma }}</span>{% endif %}
+                    </div>
+                    <a href="{% url 'cart:add_to_cart' p.id %}" class="btn-gold btn-sm btn-block add-to-cart-btn"><i class="fas fa-cart-plus"></i> Add to Cart</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+    {% endif %}
+</div>
+{% endblock %}

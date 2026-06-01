@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block title %}My Wishlist{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h1>My Wishlist <i class="fas fa-heart" style="color:var(--primary);"></i></h1>
+        <p>Your saved items for later</p>
+    </div>
+
+    {% if wishlist_items %}
+    <div class="product-grid">
+        {% for item in wishlist_items %}
+        <div class="product-card">
+            <a href="{{ item.product.get_absolute_url }}" class="card-image">
+                {% if item.product.image %}
+                <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
+                {% else %}
+                <div class="image-placeholder"><span class="initials">{{ item.product.name.0 }}{{ item.product.name.1 }}</span></div>
+                {% endif %}
+            </a>
+            <div class="card-body">
+                <div class="card-category">{{ item.product.category.name }}</div>
+                <h3 class="card-title"><a href="{{ item.product.get_absolute_url }}">{{ item.product.name }}</a></h3>
+                <div class="card-price">
+                    {% if item.product.discount_price %}
+                    <span class="price-sale">₹{{ item.product.discount_price|intcomma }}</span>
+                    <span class="price-original">₹{{ item.product.price|intcomma }}</span>
+                    {% else %}
+                    <span class="price-current">₹{{ item.product.price|intcomma }}</span>
+                    {% endif %}
+                </div>
+                <div style="display:flex; gap:10px; margin-top:1rem;">
+                    <a href="{% url 'cart:add_to_cart' item.product.id %}" class="btn-gold btn-sm add-to-cart-btn" style="flex:1;text-align:center;"><i class="fas fa-cart-plus"></i> Move to Cart</a>
+                    <a href="{% url 'store:toggle_wishlist' item.product.id %}" class="btn-outline btn-sm" style="padding:0 15px;" title="Remove"><i class="fas fa-trash"></i></a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <div class="empty-icon" style="color:#ddd;"><i class="far fa-heart"></i></div>
+        <h3>Your Wishlist is Empty</h3>
+        <p>Found something you like? Tap the heart icon to save it here.</p>
+        <a href="{% url 'store:product_list' %}" class="btn-gold" style="margin-top:15px;">Explore Products</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

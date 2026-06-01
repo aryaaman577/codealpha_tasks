@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block title %}Search: {{ query }}{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="page-header"><h1>Search Results</h1><p>{% if query %}Showing results for "<strong>{{ query }}</strong>"{% else %}Enter a search term{% endif %}</p></div>
+    {% if products %}
+    <p class="result-count" style="margin-bottom:1.5rem;">{{ products|length }} product{{ products|length|pluralize }} found</p>
+    <div class="product-grid">
+        {% for product in products %}
+        <div class="product-card">
+            <a href="{{ product.get_absolute_url }}" class="card-image">
+                {% if product.image %}<img src="{{ product.image.url }}" alt="{{ product.name }}">
+                {% else %}<div class="image-placeholder"><span class="initials">{{ product.name.0 }}{{ product.name.1 }}</span></div>{% endif %}
+            </a>
+            <div class="card-body">
+                <div class="card-category">{{ product.category.name }}</div>
+                <h3 class="card-title"><a href="{{ product.get_absolute_url }}">{{ product.name }}</a></h3>
+                <div class="card-price">{% if product.discount_price %}<span class="price-sale">₹{{ product.discount_price|intcomma }}</span><span class="price-original">₹{{ product.price|intcomma }}</span>{% else %}<span class="price-current">₹{{ product.price|intcomma }}</span>{% endif %}</div>
+                <a href="{% url 'cart:add_to_cart' product.id %}" class="btn-gold btn-sm btn-block add-to-cart-btn"><i class="fas fa-cart-plus"></i> Add to Cart</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state"><div class="empty-icon">🔍</div><h3>No Results Found</h3><p>Try a different search term.</p><a href="{% url 'store:product_list' %}" class="btn-gold">Browse All Products</a></div>
+    {% endif %}
+</div>
+{% endblock %}

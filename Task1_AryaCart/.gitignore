@@ -1,0 +1,51 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+dist/
+build/
+eggs/
+*.egg
+
+# Virtual Environment
+venv/
+env/
+.env
+
+# Django
+*.sqlite3
+staticfiles/
+*.log
+
+# Media files (user uploads)
+media/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Temporary scripts
+assign_images.py
+ddg_images.py
+download_images.py
+fast_fix_images.py
+fix_all_images.py
+local_images.py
+lorem_images.py
+make_images_unique.py
+seed_data.py
+wiki_images.py
+
+# Batch files
+Run_And_Open_AryaCart.bat
+Share_My_Website.bat
+Open_AryaCart.url

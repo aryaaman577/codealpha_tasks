@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %}About Developer{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="page-header" style="text-align:center;"><h1>About the <span class="gold">Developer</span></h1><p>The mind behind AryaCart</p></div>
+    <div class="about-layout">
+        <div class="about-photo-card">
+            <div class="about-avatar">👨‍💻</div>
+            <h2>Aman Gupta</h2>
+            <p style="color:var(--gold);font-weight:500;">Full Stack Developer</p>
+            <p style="color:var(--text-muted);font-size:0.9rem;margin-top:0.5rem;">CodeAlpha Intern</p>
+            <div style="margin-top:1.5rem;display:flex;justify-content:center;gap:1rem;">
+                <a href="https://github.com/aryaaman577" class="nav-action-btn"><i class="fab fa-github"></i></a>
+                <a href="#" class="nav-action-btn"><i class="fab fa-linkedin"></i></a>
+                <a href="tel:+919936281054" class="nav-action-btn"><i class="fas fa-phone"></i></a>
+            </div>
+        </div>
+        <div class="about-content">
+            <h3>Hello! I'm <span class="gold">Aman</span> 👋</h3>
+            <p style="color:var(--text-secondary);line-height:1.8;margin:1rem 0;">I'm a passionate Full Stack Developer currently interning at <strong style="color:var(--gold);">CodeAlpha</strong> in the Full Stack Development track. AryaCart is my flagship e-commerce project (Task 1) that demonstrates my proficiency in Django, Python, HTML/CSS, JavaScript, and database management.</p>
+            <p style="color:var(--text-secondary);line-height:1.8;margin-bottom:1.5rem;">This project showcases my ability to build production-ready applications with features like user authentication, shopping cart, order management, watch history, and responsive design — all built from scratch.</p>
+            <h4 style="margin-bottom:1rem;">Tech Stack</h4>
+            <div class="tech-badges">
+                <span class="tech-badge">🐍 Python</span>
+                <span class="tech-badge">🎯 Django</span>
+                <span class="tech-badge">⚡ JavaScript</span>
+                <span class="tech-badge">🎨 HTML5/CSS3</span>
+                <span class="tech-badge">🗃️ SQLite</span>
+                <span class="tech-badge">📱 Responsive Design</span>
+                <span class="tech-badge">🔒 Authentication</span>
+                <span class="tech-badge">🎵 Web Audio API</span>
+            </div>
+            <div style="margin-top:2rem;padding:1.5rem;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);">
+                <h4 style="color:var(--gold);margin-bottom:0.5rem;">📋 Internship Details</h4>
+                <p style="color:var(--text-secondary);font-size:0.9rem;line-height:1.8;">Company: CodeAlpha<br>Role: Full Stack Development Intern<br>Project: AryaCart — Full Stack E-Commerce Store (Task 1)<br>📞 Phone: +91 9936281054<br>🌐 GitHub: <a href="https://github.com/aryaaman577" style="color:var(--gold);">github.com/aryaaman577</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

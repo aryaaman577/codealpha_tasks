@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block title %}Order Confirmed{% endblock %}
+{% block content %}
+<div class="container" style="padding-top:4rem;padding-bottom:4rem;">
+    <div class="confirmation-card">
+        <div class="confirm-icon">✓</div>
+        <h1>Order Placed <span class="gold">Successfully!</span></h1>
+        <p style="color:var(--text-secondary);font-size:1.1rem;margin:1rem 0;">Thank you for your purchase.</p>
+        <div class="order-number-display">{{ order.order_number }}</div>
+        <div class="confirm-details">
+            <div class="confirm-row"><span>Total Amount</span><span class="gold">₹{{ order.total_amount|intcomma }}</span></div>
+            <div class="confirm-row"><span>Payment</span><span>{{ order.get_payment_method_display|default:order.payment_method|upper }}</span></div>
+            <div class="confirm-row"><span>Status</span><span class="status-badge status-{{ order.status }}">{{ order.get_status_display }}</span></div>
+            <div class="confirm-row"><span>Shipping To</span><span>{{ order.city }}, {{ order.state }}</span></div>
+        </div>
+        <div style="display:flex;gap:1rem;justify-content:center;margin-top:2rem;flex-wrap:wrap;">
+            <a href="{% url 'orders:order_detail' order.order_number %}" class="btn-gold"><i class="fas fa-eye"></i> View Order</a>
+            <a href="{% url 'store:product_list' %}" class="btn-outline"><i class="fas fa-shopping-bag"></i> Continue Shopping</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

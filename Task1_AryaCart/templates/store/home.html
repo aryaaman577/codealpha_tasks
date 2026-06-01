@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<!-- Hero -->
+<section class="hero">
+    <div class="container">
+        <h1>Discover <span class="gold">Premium</span> Products</h1>
+        <p class="subtitle">Curated collections of the finest products, delivered with elegance and precision.</p>
+        <div class="hero-btn"><a href="{% url 'store:product_list' %}" class="btn-gold btn-lg"><i class="fas fa-shopping-bag"></i> Shop Now</a></div>
+        <div class="hero-stats">
+            <div class="hero-stat"><div class="stat-number">500+</div><div class="stat-label">Products</div></div>
+            <div class="hero-stat"><div class="stat-number">2K+</div><div class="stat-label">Customers</div></div>
+            <div class="hero-stat"><div class="stat-number">99%</div><div class="stat-label">Satisfaction</div></div>
+        </div>
+    </div>
+</section>
+
+<!-- Categories -->
+{% if categories %}
+<section class="section">
+    <div class="container">
+        <div class="section-header">
+            <h2>Shop by <span class="gold">Category</span></h2>
+            <p>Find exactly what you're looking for</p>
+        </div>
+        <div class="category-grid">
+            {% for cat in categories %}
+            <a href="{% url 'store:category_products' slug=cat.slug %}" class="category-card">
+                <div class="cat-icon">{% if forloop.counter == 1 %}💻{% elif forloop.counter == 2 %}👕{% elif forloop.counter == 3 %}📱{% elif forloop.counter == 4 %}🏠{% elif forloop.counter == 5 %}📚{% else %}🎁{% endif %}</div>
+                <div class="cat-name">{{ cat.name }}</div>
+                <div class="cat-count">{{ cat.products.count }} products</div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Featured Products -->
+{% if featured_products %}
+<section class="section">
+    <div class="container">
+        <div class="section-header">
+            <h2>Featured <span class="gold">Collection</span></h2>
+            <p>Handpicked items our customers love</p>
+        </div>
+        <div class="product-grid">
+            {% for product in featured_products %}
+            <div class="product-card">
+                <a href="{{ product.get_absolute_url }}" class="card-image">
+                    {% if product.image %}
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                    {% else %}
+                    <div class="image-placeholder"><span class="initials">{{ product.name.0 }}{{ product.name.1 }}</span></div>
+                    {% endif %}
+                    {% if product.discount_percentage %}
+                    <span class="discount-badge">-{{ product.discount_percentage }}%</span>
+                    {% endif %}
+                </a>
+                <div class="card-body">
+                    <div class="card-category">{{ product.category.name }}</div>
+                    <h3 class="card-title"><a href="{{ product.get_absolute_url }}">{{ product.name }}</a></h3>
+                    <div class="card-price">
+                        {% if product.discount_price %}<span class="price-sale">₹{{ product.discount_price|intcomma }}</span><span class="price-original">₹{{ product.price|intcomma }}</span>
+                        {% else %}<span class="price-current">₹{{ product.price|intcomma }}</span>{% endif %}
+                    </div>
+                    <a href="{% url 'cart:add_to_cart' product.id %}" class="btn-gold btn-sm btn-block add-to-cart-btn"><i class="fas fa-cart-plus"></i> Add to Cart</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div style="text-align:center;margin-top:2.5rem;"><a href="{% url 'store:product_list' %}" class="btn-outline">View All Products <i class="fas fa-arrow-right"></i></a></div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Latest Arrivals -->
+{% if latest_products %}
+<section class="section">
+    <div class="container">
+        <div class="section-header">
+            <h2>Latest <span class="gold">Arrivals</span></h2>
+            <p>Fresh additions to our collection</p>
+        </div>
+        <div class="product-grid">
+            {% for product in latest_products %}
+            <div class="product-card">
+                <a href="{{ product.get_absolute_url }}" class="card-image">
+                    {% if product.image %}
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                    {% else %}
+                    <div class="image-placeholder"><span class="initials">{{ product.name.0 }}{{ product.name.1 }}</span></div>
+                    {% endif %}
+                    {% if product.discount_percentage %}
+                    <span class="discount-badge">-{{ product.discount_percentage }}%</span>
+                    {% endif %}
+                </a>
+                <div class="card-body">
+                    <div class="card-category">{{ product.category.name }}</div>
+                    <h3 class="card-title"><a href="{{ product.get_absolute_url }}">{{ product.name }}</a></h3>
+                    <div class="card-price">
+                        {% if product.discount_price %}<span class="price-sale">₹{{ product.discount_price|intcomma }}</span><span class="price-original">₹{{ product.price|intcomma }}</span>
+                        {% else %}<span class="price-current">₹{{ product.price|intcomma }}</span>{% endif %}
+                    </div>
+                    <a href="{% url 'cart:add_to_cart' product.id %}" class="btn-gold btn-sm btn-block add-to-cart-btn"><i class="fas fa-cart-plus"></i> Add to Cart</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+{% endblock %}
