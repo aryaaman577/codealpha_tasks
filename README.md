@@ -132,15 +132,18 @@ python manage.py runserver
 
 ### 📸 Screenshots
 
-| Page | Description |
+| Page | Preview |
 |---|---|
-| Home Page | Premium landing page with featured products and categories |
-| Product Catalog | Grid layout with filtering and sorting options |
-| Product Detail | Full product info, reviews, add to cart, wishlist |
-| Shopping Cart | Item management with quantity controls and coupon system |
-| Checkout | Multi-step checkout with payment simulation |
-| User Profile | Profile management with order history |
-| Admin Panel | Django admin for complete store management |
+| **01. Home Page** | ![Home Page](Task1_AryaCart/screenshots/01_home_page.png) |
+| **02. Shop Page** | ![Shop Page](Task1_AryaCart/screenshots/02_shop_page.png) |
+| **03. Product Detail** | ![Product Detail](Task1_AryaCart/screenshots/03_product_detail.png) |
+| **04. Register Page** | ![Register Page](Task1_AryaCart/screenshots/04_register_page.png) |
+| **05. Login Page** | ![Login Page](Task1_AryaCart/screenshots/05_login_page.png) |
+| **06. About Page** | ![About Page](Task1_AryaCart/screenshots/06_about_page.png) |
+| **07. Contact Page** | ![Contact Page](Task1_AryaCart/screenshots/07_contact_page.png) |
+| **08. Cart Page** | ![Cart Page](Task1_AryaCart/screenshots/08_cart_page.png) |
+| **09. Profile Page** | ![Profile Page](Task1_AryaCart/screenshots/09_profile_page.png) |
+| **10. Admin Panel** | ![Admin Panel](Task1_AryaCart/screenshots/10_admin_panel.png) |
 
 ### 🗄️ Database Schema
 
