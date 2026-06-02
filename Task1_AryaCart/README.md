@@ -1,7 +1,8 @@
 # 🛒 AryaCart — Full Stack E-Commerce Store
 
 **Developer:** Aman Gupta  
-**Internship:** CodeAlpha — Full Stack Development, Task 1
+**Internship:** CodeAlpha — Full Stack Development, Task 1  
+🚀 **Live Demo:** [https://aryaaman577.pythonanywhere.com](https://aryaaman577.pythonanywhere.com)
 
 ---
 

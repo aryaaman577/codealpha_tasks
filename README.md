@@ -6,6 +6,8 @@
 ![Full Stack](https://img.shields.io/badge/Full_Stack-Web_Development-blue?style=for-the-badge)
 ![Status](https://img.shields.io/badge/Status-Completed-brightgreen?style=for-the-badge)
 
+### 🌐 [Click Here to View Live Website (AryaCart)](https://aryaaman577.pythonanywhere.com)
+
 </div>
 
 ---
