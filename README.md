@@ -6,10 +6,49 @@
 ![Full Stack](https://img.shields.io/badge/Full_Stack-Web_Development-blue?style=for-the-badge)
 ![Status](https://img.shields.io/badge/Status-Completed-brightgreen?style=for-the-badge)
 
-### 🌐 [Live Production Demo (AryaCart)](https://aryaaman577.pythonanywhere.com)  
-### 💻 [Local Development Server (AryaCart)](http://127.0.0.1:8000/)
-
 </div>
+
+---
+
+## ⚡ Quick Start: Run AryaCart Locally
+
+To run the e-commerce store locally on your PC, follow these simple steps:
+
+### Option A: Automatic Launcher (Fastest)
+1. Open the project folder `Task1_AryaCart`.
+2. Double-click the **`Run_And_Open_AryaCart.bat`** file. 
+3. The launcher will automatically start the backend server in the background and open the website in your default browser.
+
+### Option B: Manual Command Line
+1. Open PowerShell or Command Prompt.
+2. Navigate to the project directory:
+   ```bash
+   cd Task1_AryaCart
+   ```
+3. Run the development server:
+   ```bash
+   python manage.py runserver
+   ```
+4. Keep the command window open and use the local links in the directory below.
+
+---
+
+## 📂 Page Directory (Local vs Live)
+
+Once the local server is running (using Option A or B above), you can use the links below to access all different pages of **AryaCart** either locally or via the live deployed link.
+
+| Page Name | Local Access Link | Live Online Link |
+|---|---|---|
+| 🏠 **Home Page** | [http://127.0.0.1:8000/](http://127.0.0.1:8000/) | [https://aryaaman577.pythonanywhere.com/](https://aryaaman577.pythonanywhere.com/) |
+| 📦 **Shop Catalog** | [http://127.0.0.1:8000/products/](http://127.0.0.1:8000/products/) | [https://aryaaman577.pythonanywhere.com/products/](https://aryaaman577.pythonanywhere.com/products/) |
+| 💻 **Product Details** | [http://127.0.0.1:8000/product/macbook-pro-m3/](http://127.0.0.1:8000/product/macbook-pro-m3/) | [https://aryaaman577.pythonanywhere.com/product/macbook-pro-m3/](https://aryaaman577.pythonanywhere.com/product/macbook-pro-m3/) |
+| 🛒 **Shopping Cart** | [http://127.0.0.1:8000/cart/](http://127.0.0.1:8000/cart/) | [https://aryaaman577.pythonanywhere.com/cart/](https://aryaaman577.pythonanywhere.com/cart/) |
+| 👤 **User Profile** | [http://127.0.0.1:8000/accounts/profile/](http://127.0.0.1:8000/accounts/profile/) | [https://aryaaman577.pythonanywhere.com/accounts/profile/](https://aryaaman577.pythonanywhere.com/accounts/profile/) |
+| 🔑 **Login Page** | [http://127.0.0.1:8000/accounts/login/](http://127.0.0.1:8000/accounts/login/) | [https://aryaaman577.pythonanywhere.com/accounts/login/](https://aryaaman577.pythonanywhere.com/accounts/login/) |
+| 📝 **Register Page** | [http://127.0.0.1:8000/accounts/register/](http://127.0.0.1:8000/accounts/register/) | [https://aryaaman577.pythonanywhere.com/accounts/register/](https://aryaaman577.pythonanywhere.com/accounts/register/) |
+| ℹ️ **About Page** | [http://127.0.0.1:8000/pages/about/](http://127.0.0.1:8000/pages/about/) | [https://aryaaman577.pythonanywhere.com/pages/about/](https://aryaaman577.pythonanywhere.com/pages/about/) |
+| 📞 **Contact Page** | [http://127.0.0.1:8000/pages/contact/](http://127.0.0.1:8000/pages/contact/) | [https://aryaaman577.pythonanywhere.com/pages/contact/](https://aryaaman577.pythonanywhere.com/pages/contact/) |
+| 🔐 **Admin Panel** | [http://127.0.0.1:8000/admin/](http://127.0.0.1:8000/admin/) | [https://aryaaman577.pythonanywhere.com/admin/](https://aryaaman577.pythonanywhere.com/admin/) |
 
 ---
 
