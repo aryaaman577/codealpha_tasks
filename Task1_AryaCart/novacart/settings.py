@@ -26,6 +26,7 @@ else:
     ALLOWED_HOSTS += [
         '.onrender.com',
         '.pythonanywhere.com',
+        '.vercel.app',
         'localhost',
         '127.0.0.1',
     ]
@@ -33,6 +34,7 @@ else:
 CSRF_TRUSTED_ORIGINS = [
     'https://*.onrender.com',
     'https://*.pythonanywhere.com',
+    'https://*.vercel.app',
     'https://*.lhr.life',
     'https://*.pinggy.link',
 ]
