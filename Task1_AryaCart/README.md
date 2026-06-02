@@ -2,7 +2,8 @@
 
 **Developer:** Aman Gupta  
 **Internship:** CodeAlpha — Full Stack Development, Task 1  
-🚀 **Live Demo:** [https://aryaaman577.pythonanywhere.com](https://aryaaman577.pythonanywhere.com)
+🚀 **Live Demo:** [https://aryaaman577.pythonanywhere.com](https://aryaaman577.pythonanywhere.com)  
+💻 **Local Demo:** [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
 
 ---
 
