@@ -9,11 +9,16 @@
 
 To run the e-commerce store locally on your PC, follow these simple steps:
 
-### Option A: Automatic Launcher (Fastest)
+### Option A: Go Live Folder (Recommended & Fastest) 🚀
+1. Open the **`Go_Live`** folder manually, or double-click the **`Open_Go_Live_Folder.bat`** script in this folder.
+2. Inside that folder, double-click **`Go_Live.bat`** (or open **`Go_Live.html`**).
+3. The launcher will automatically ensure the local Django server is running and instantly redirect you to the website in your default browser.
+
+### Option B: Automatic Launcher
 1. Double-click the **`Run_And_Open_AryaCart.bat`** file in this folder.
 2. The launcher will automatically start the backend server in the background and open the website in your default browser.
 
-### Option B: Manual Command Line
+### Option C: Manual Command Line
 1. Open PowerShell or Command Prompt in this folder.
 2. Run the development server:
    ```bash
