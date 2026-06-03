@@ -20,7 +20,7 @@ staticfiles/
 *.log
 
 # Media files (user uploads)
-media/
+
 
 # IDE
 .vscode/
