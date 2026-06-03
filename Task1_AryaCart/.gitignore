@@ -15,7 +15,7 @@ env/
 .env
 
 # Django
-*.sqlite3
+
 staticfiles/
 *.log
 

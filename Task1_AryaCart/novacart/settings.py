@@ -90,9 +90,25 @@ WSGI_APPLICATION = 'novacart.wsgi.application'
 
 # Database
 # Use DATABASE_URL from environment (Render Postgres) or fall back to SQLite
+import shutil
+
+IS_VERCEL = 'VERCEL' in os.environ
+
+if IS_VERCEL:
+    db_src = BASE_DIR / 'db.sqlite3'
+    db_dest = Path('/tmp/db.sqlite3')
+    if db_src.exists() and not db_dest.exists():
+        try:
+            shutil.copy2(db_src, db_dest)
+        except Exception as e:
+            print(f"Error copying database: {e}")
+    db_path = db_dest
+else:
+    db_path = BASE_DIR / 'db.sqlite3'
+
 DATABASES = {
     'default': dj_database_url.config(
-        default=f'sqlite:///{BASE_DIR / "db.sqlite3"}',
+        default=f'sqlite:///{db_path}',
         conn_max_age=600,
     )
 }
